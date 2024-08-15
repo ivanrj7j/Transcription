@@ -1,18 +1,17 @@
 from whisper.model import Whisper
-from io import BytesIO
 from src.modules.utils import encodeSegment
 
 class Transcriber:
     def __init__(self, model:Whisper) -> None:
         self.model = model
 
-    def getRawOutput(self, audioFile:str|BytesIO) -> dict[str, str|list]:
+    def getRawOutput(self, audioFile:str) -> dict[str, str|list]:
         return self.model.transcribe(audioFile)
 
-    def getText(self, audioFile:str|BytesIO) -> str:
+    def getText(self, audioFile:str) -> str:
         return self.getRawOutput(audioFile)["text"]
 
-    def getTranscription(self, audioFile:str|BytesIO) -> str:
+    def getTranscription(self, audioFile:str) -> str:
         segments = self.getRawOutput(audioFile)["segments"]
         transcription = ""
 
@@ -24,6 +23,6 @@ class Transcriber:
         with open(outputFile, 'w') as f:
             f.write(transcription)
 
-    def saveTranscriptionFromAudio(self, audioFile:str|BytesIO, outputFile:str):
+    def saveTranscriptionFromAudio(self, audioFile:str, outputFile:str):
         transcription = self.getTranscription(audioFile)
         self.saveTranscription(transcription, outputFile)
