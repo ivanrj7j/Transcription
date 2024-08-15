@@ -22,6 +22,10 @@ This project is a Flask-based application that utilizes the Whisper library for 
 
 This project is a complete solution for transcribing audio files using the Whisper library. It provides a set of API endpoints that allow users to transcribe audio files and extract text and raw audio segments from them. The project also includes a custom Transcriber class that encapsulates the functionality of the Whisper model and provides additional methods for saving the transcription text to a file.
 
+## Tutorial
+
+Click [here](https://github.com/ivanrj7j/Transcription/wiki/Tutorial) to see the tutorials for this project.
+
 ## Installation
 
 To install the project, follow these steps:
