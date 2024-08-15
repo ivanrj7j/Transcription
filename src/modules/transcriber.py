@@ -1,6 +1,6 @@
 from whisper.model import Whisper
 from io import BytesIO
-from src.utils import encodeSegment
+from src.modules.utils import encodeSegment
 
 class Transcriber:
     def __init__(self, model:Whisper) -> None:
