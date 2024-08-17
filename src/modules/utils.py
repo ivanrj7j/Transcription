@@ -20,6 +20,29 @@ def SRTTime(_seconds:str):
     
     return f"{int(hours):02}:{int(minutes):02}:{int(seconds):02},{ms}"
 
+def newLineText(text:str, newLineInterval:int=8):
+    """
+    This function takes a string of text and inserts newlines at specified intervals to ensure each line does not exceed a certain number of words.
+
+    Parameters:
+    text (str): The input text to be processed.
+    newLineInterval (int, optional): The maximum number of words per line. Defaults to 8.
+
+    Returns:
+    str: The processed text with newlines inserted at the specified intervals.
+    """
+    splitText = text.split()
+    if len(splitText) > newLineInterval:
+        for wordIndex, word in enumerate(splitText):
+            if wordIndex % (newLineInterval-1) == 0 and wordIndex > 0:
+                splitText[wordIndex] = word + '\n'
+            else:
+                splitText[wordIndex] = word + " "
+
+        text = "".join(splitText)
+
+    return text
+
 def encodeSegment(segment:dict[str, int|list|float|str], i:int, newLineInterval:int=8):
     """
     Encodes a given segment of text into an SRT format string.
@@ -43,14 +66,6 @@ def encodeSegment(segment:dict[str, int|list|float|str], i:int, newLineInterval:
     start = SRTTime(segment['start'])
     end = SRTTime(segment['end'])
 
-    splitText = text.split()
-    if len(splitText) > newLineInterval:
-        for wordIndex, word in enumerate(splitText):
-            if wordIndex % (newLineInterval-1) == 0 and wordIndex > 0:
-                splitText[wordIndex] = word + '\n'
-            else:
-                splitText[wordIndex] = word + " "
-
-        text = "".join(splitText)
+    text = newLineText(text, newLineInterval)
 
     return f"{i}\n{start} --> {end}\n{text}\n\n"
