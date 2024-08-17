@@ -1,6 +1,6 @@
-# Transcription API
+# Transcription and Video Subtitling API
 
-This project is a Flask-based application that utilizes the Whisper library for transcribing audio files. The main components of the project are the API endpoints, the Whisper model, and the Transcriber class.
+This project is a Flask-based application that utilizes the Whisper library for transcribing audio files and adds functionality for video subtitling. The main components of the project are the API endpoints, the Whisper model, the Transcriber class, and the video subtitling modules.
 
 ## Table of Contents
 
@@ -8,19 +8,17 @@ This project is a Flask-based application that utilizes the Whisper library for 
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [API Endpoints](#api-endpoints)
-   - `/transcribe`
-   - `/text`
-   - `/rawSegments`
 5. [Whisper Model](#whisper-model)
 6. [Transcriber Class](#transcriber-class)
-7. [Utils Module](#utils-module)
-8. [Main Module](#main-module)
-9. [Contributing](#contributing)
-10. [License](#license)
+7. [Video Subtitling](#video-subtitling)
+8. [Utils Module](#utils-module)
+9. [Main Module](#main-module)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ## Introduction
 
-This project is a complete solution for transcribing audio files using the Whisper library. It provides a set of API endpoints that allow users to transcribe audio files and extract text and raw audio segments from them. The project also includes a custom Transcriber class that encapsulates the functionality of the Whisper model and provides additional methods for saving the transcription text to a file.
+This project is a comprehensive solution for transcribing audio files using the Whisper library and adding subtitles to videos. It provides a set of API endpoints for audio transcription and includes modules for video subtitling. The project encompasses audio transcription, text extraction, and video subtitling functionalities.
 
 ## Tutorial
 
@@ -58,29 +56,51 @@ To use the project, follow these steps:
 
 ## API Endpoints
 
-The project provides three main API endpoints:
+The project provides three main API endpoints for audio transcription:
 
-- `/transcribe`: This endpoint transcribes an audio file and returns the transcription as a JSON response. It uses the [Transcriber](src/modules/transcriber.py) class to get the transcription and then returns the result.
-
-- `/text`: This endpoint extracts text from an uploaded audio file and returns it as a JSON response. It also uses the [Transcriber](src/modules/transcriber.py) class to get the text from the audio.
-
-- `/rawSegments`: This endpoint extracts raw audio segments from an uploaded audio file and returns them as a JSON response. It also uses the [Transcriber](src/modules/transcriber.py) class to get the raw segments from the audio.
+- `/transcribe`: Transcribes an audio file and returns the transcription as a JSON response.
+- `/text`: Extracts text from an uploaded audio file and returns it as a JSON response.
+- `/rawSegments`: Extracts raw audio segments from an uploaded audio file and returns them as a JSON response.
 
 ## Whisper Model
 
-The Whisper model is a state-of-the-art speech-to-text library that is used for transcribing audio files. The project uses the `Whisper` class from the Whisper library to perform the transcription.
+The Whisper model is a state-of-the-art speech-to-text library used for transcribing audio files.
 
 ## Transcriber Class
 
-The [Transcriber](src/modules/transcriber.py) class is a custom class that encapsulates the functionality of the Whisper model. It provides methods for getting the raw output from the Whisper model's transcription, getting the full transcription text, and getting the transcription broken down into segments. The [Transcriber](src/modules/transcriber.py) class also provides a method for saving the transcription text to a file.
+The [Transcriber](src/modules/transcriber.py) class encapsulates the functionality of the Whisper model, providing methods for transcription and text extraction.
+
+## Video Subtitling
+
+The project includes video subtitling capabilities with two new modules:
+
+### VideoTranscriber (video.py)
+
+The `VideoTranscriber` class in `video.py` handles the process of adding subtitles to videos. Key features include:
+
+- Initializing with a video file, subtitle configuration, and raw subtitle data
+- Converting timestamps to frame indices
+- Interpreting SRT-like subtitle data
+- Applying subtitles to video frames
+- Saving the subtitled video to a file
+
+### Subtitle and SubtitleConfig (subtitle.py)
+
+The `subtitle.py` module contains two main classes:
+
+1. `SubtitleConfig`: Manages the configuration for subtitle appearance, including font, size, color, and positioning.
+
+2. `Subtitle`: Represents individual subtitle segments and handles the rendering of subtitles on video frames.
+
+These classes work together to provide a flexible and customizable video subtitling system.
 
 ## Utils Module
 
-The `utils` module contains helper functions that are used throughout the project. The `audioPresent` decorator function checks if an audio file is present in the request. The `tempFile` function saves the provided file to a temporary location with a unique ID and extension.
+The `utils` module contains helper functions used throughout the project, including audio file handling and temporary file management.
 
 ## Main Module
 
-The `main` module initializes the Flask application and registers the API endpoints. It also sets up the Whisper model and the Transcriber class.
+The `main` module initializes the Flask application, registers the API endpoints, and sets up the Whisper model and Transcriber class.
 
 ## Contributing
 
