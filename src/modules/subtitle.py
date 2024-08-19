@@ -3,6 +3,7 @@ from numpy import ndarray
 from PIL.ImageFont import FreeTypeFont, truetype
 from PIL import Image, ImageDraw
 from numpy import array
+import re
 
 class SubtitleConfig:
     def __init__(self, fontFamily:int|str, scale:float, thickness:float, lineSpacing:int|float, color:tuple[int, int, int], relativePos:tuple[int, int]=(0.5, 0.5), screenShape:tuple[int, int]=(640, 290), newLineInterval:int=8, backBox:bool=True, backBoxColor:tuple[int, int, int]=(60, 170, 250), padding:int=2) -> None:
@@ -161,7 +162,9 @@ class Subtitle:
                 y += self.config.lineSpacing
             
             for (anchorX, anchorY), (w, h), line in boxData:
-                frame = self.darwBackBox(frame, anchorX, anchorY, w, h) 
+                pattern = "^[ \t]+$" 
+                if not (bool(re.match(pattern, line)) or line==""):
+                    frame = self.darwBackBox(frame, anchorX, anchorY, w, h) 
 
             for (anchorX, anchorY), (w, h), line in boxData:
                 frame = self.renderText(line, anchorX, anchorY, frame)
